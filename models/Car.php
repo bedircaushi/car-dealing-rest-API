@@ -45,6 +45,16 @@
             return $query = 'SELECT * FROM ' . $this->table. " c WHERE c.make="."'".$make."' and c.model="."'".$model."' and c.mileage<="."'".$mileage."' and c.price<="."'".$price."' and c.date_<="."'".$registration."'";
             $stmt=$db->prepare($query);
         }
+        //get only car makes
+        public function getOnlyMake(){
+            return $query = 'SELECT DISTINCT make FROM  '. $this->table;
+            $stmt=$db->prepare($query);
+        }
+
+        //get only specific makes' models
+        public function getOnlyModel($make){
+            return $query = 'SELECT DISTINCT model FROM '. $this->table.' c WHERE c.make='."'".$make."'";
+        }
     }
 
 
