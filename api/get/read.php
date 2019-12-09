@@ -11,7 +11,13 @@
     $car= new Car($db);
     $car->make=isset($_GET['make']);
     $car->model=isset($_GET['model']);
-    if($car->make && $car->model){
+    $car->mileage=isset($_GET['mileage']);
+    $car->price=isset($_GET['price']);
+    $car->date_=isset($_GET['registration']);
+    if($car->make && $car->model && $car->mileage && $car->price && $car->date_){
+        $result=$database->getConn()->query($car->getWithDetails($_GET['make'],$_GET['model'],$_GET['mileage'],$_GET['price'],$_GET['registration']));
+    }
+    else if($car->make && $car->model){
         $result=$database->getConn()->query($car->getMakeAndModel($_GET['make'],$_GET['model']));
     }
     else if($car->make){
