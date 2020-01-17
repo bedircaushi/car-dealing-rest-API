@@ -24,36 +24,41 @@
             return $query='SELECT COUNT(*) AS total FROM ' . $this->table;
             $stmt=$db->prepare($query);
         }
+        //get specific car
+        public function getSpecific($id){
+            return $query = 'SELECT * FROM ' . $this->table. " c WHERE c.vehicleID="."'".$id."'";
+            $stmt=$db->prepare($query);
+        }
         //get all cars
         public function getAll()
         {
-            return $query = 'SELECT * FROM ' . $this->table;
+            return $query = 'SELECT * FROM ' . $this->table.' c ORDER BY c.price ASC';
             $stmt=$this->conn->prepare($query);
         }
         //get all cars of specific make
         public function getMake($make){
-            return $query = 'SELECT * FROM ' . $this->table. " c WHERE c.make="."'".$make."'";
+            return $query = 'SELECT * FROM ' . $this->table. " c WHERE c.make="."'".$make."' ORDER BY c.price ASC";
             $stmt=$db->prepare($query);
         }
         //get all cars of specific model and make
         public function getMakeAndModel($make,$model){
-            return $query = 'SELECT * FROM ' . $this->table. " c WHERE c.make="."'".$make."' and c.model="."'".$model."'";
+            return $query = 'SELECT * FROM ' . $this->table. " c WHERE c.make="."'".$make."' and c.model="."'".$model."' ORDER BY c.price ASC";
             $stmt=$db->prepare($query);
         }
-        //get all cars of specific model, make, mileage, price and registration
-        public function getWithDetails($make,$model,$mileage,$price,$registration){
-            return $query = 'SELECT * FROM ' . $this->table. " c WHERE c.make="."'".$make."' and c.model="."'".$model."' and c.mileage<="."'".$mileage."' and c.price<="."'".$price."' and c.date_<="."'".$registration."'";
+        //get all cars of specific model, make, price and registration
+        public function getWithDetails($make,$model,$price,$registration){
+            return $query = 'SELECT * FROM ' . $this->table. " c WHERE c.make="."'".$make."' and c.model="."'".$model."' and c.price<=".$price." and c.date_<="."'".$registration."' ORDER BY c.price ASC";
             $stmt=$db->prepare($query);
         }
         //get only car makes
         public function getOnlyMake(){
-            return $query = 'SELECT DISTINCT make FROM  '. $this->table;
+            return $query = 'SELECT DISTINCT make FROM  '. $this->table.'  c ORDER BY c.make ASC';
             $stmt=$db->prepare($query);
         }
 
         //get only specific makes' models
         public function getOnlyModel($make){
-            return $query = 'SELECT DISTINCT model FROM '. $this->table.' c WHERE c.make='."'".$make."'";
+            return $query = 'SELECT DISTINCT model FROM '. $this->table.' c WHERE c.make='."'".$make."'  ORDER BY c.model ASC";
         }
 
         //addCar
