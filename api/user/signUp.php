@@ -1,4 +1,5 @@
 <?php
+session_start();
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -11,16 +12,14 @@ $database=new Database();
 $db=$database->connect();
 $user= new User($db);
 
-// get posted data
-$data = json_decode(file_get_contents("php://input"));
 
 // set product property values
-$user->username = $data->username;
-$user->nameAndSurname = $data->nameAndSurname;
-$user->address = $data->address;
-$user->email = $data->email;
-$user->password_ = $data->password_;
-$user->phone = $data->phone;
+$user->username = $_POST['username'];
+$user->nameAndSurname = $_POST['nameAndSurname'];
+$user->address = $_POST['address'];
+$user->email = $_POST['email'];
+$user->password_ = $_POST['password'];
+$user->phone = $_POST['phone'];
 
 $userExists = $user->userExists();
 
@@ -37,8 +36,12 @@ if(!$user->userExists()) {
         $user->insertUser()
     ){
 
+         $_SESSION['user'] = $user->username;
+
         // set response code
         http_response_code(200);
+
+
 
         // display message: user was created
         echo json_encode(array("message" => "User was created."));
