@@ -13,12 +13,10 @@ $database=new Database();
 $db=$database->connect();
 $user= new User($db);
 
-// get posted data
-$data = json_decode(file_get_contents("php://input"));
 
 //set username and password values;
-$user->username = $data->username;
-$user->password_ = $data->password_;
+$user->username = $_POST['username'];
+$user->password_ = $_POST['password'];
 
 
 
@@ -26,15 +24,17 @@ if(!empty($user->username) &&
    !empty($user->password_) && $user->userExists())
 {
 
-        $_SESSION['user'] = $user->username;
+       $_SESSION['user'] = $user->username;
      // set response code
      http_response_code(200);
 
     //header("Location:index.php");
 
      // display message: login was successful
-        echo json_encode(array("message" => "Login was successful."));
-        echo 'Hi, ' . $_SESSION["user"];
+       // echo json_encode(array("message" => "Login was successful."));
+        //echo 'Hi, ' . $_SESSION["user"];
+        header("Location: http://localhost:3000/");
+
  }
 
  // message if unable to login
@@ -46,8 +46,10 @@ if(!empty($user->username) &&
      //header("Location:login.php");
 
      // display message: login failed
-     echo json_encode(array("message" => "Login failed."));
-     echo 'Hi, ' . $_SESSION["user"];
+     //echo json_encode(array("message" => "Login failed."));
+     //echo 'Hi, ' . $_SESSION["user"];
+
+     header("Location: http://localhost/car-dealing-rest-API/api/user/loggedIn.php");
 
 
  }
