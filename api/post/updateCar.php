@@ -10,27 +10,33 @@ $database=new Database();
 $db=$database->connect();
 $car= new Car($db);
 
-$data = json_decode(file_get_contents("php://input"));
+$vehicleid = $_POST['vehicleid'];
+$make = $_POST['make'];
+$model = $_POST['model'];
+$description = $_POST['description'];
+$fuel = $_POST['fuel'];
+$image = $_POST['image'];
+$price = $_POST['price'];
+$power = $_POST['power'];
+$mileage = $_POST['mileage'];
+$date = $_POST['date'];
+$username = $_POST['username'];
 
-$car->vehicleID = $data->vehicleid;
-$car->make = $data->make;
-$car->model = $data->model;
-$car->description_ = $data->description;
-$car->fuel = $data->fuel;
-$car->image = $data->image;
-$car->price = $data->price;
-$car->power_ = $data->power;
-$car->mileage = $data->mileage;
-$car->date_ = $data->date;
-$car->username = $data->username;
-
+$car->vehicleID = $vehicleid;
+$car->make = $make;
+$car->model = $model;
+$car->description_ = $description;
+$car->fuel = $fuel;
+$car->image = $image;
+$car->price = $price;
+$car->power_ = $power;
+$car->mileage = $mileage;
+$car->date_ = $date;
+$car->username = $username;
 if ($car->insert_or_update("UPDATE")) {
-    echo json_encode(
-        array('message' => 'Car is updated successfully')
-    );
+    header("Location: http://localhost/car-dealing-rest-API/api/post/isUpdatedMessage.php");
 }
 else{
-    echo json_encode(
-        array('message' => 'Car is not updated!')
-    );
+    include("isUpdatedMessage.php");
+    header("Location: http://localhost/car-dealing-rest-API/api/post/isUpdatedMessageError.php");
 }
