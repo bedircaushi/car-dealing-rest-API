@@ -1,4 +1,5 @@
 <?php
+/* The purpose of this API is is to create a user, get the inputs as json and it is designed for POST HTTP request */
 session_start();
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -44,7 +45,7 @@ if(!$user->userExists()) {
 
 
         // display message: user was created
-        echo json_encode(array("message" => "User was created."));
+        header("Location: http://localhost:3000/");
     }
 
     // message if unable to create user
@@ -63,7 +64,7 @@ if(!$user->userExists()) {
         http_response_code(400);
 
         // display message: unable to create user
-        echo json_encode(array("message" => "User is already registered"));
+        header("Location: http://localhost/car-dealing-rest-API/api/user/registerFailed.php");
         }
 
 

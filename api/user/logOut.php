@@ -3,6 +3,5 @@ session_start();
 unset($_SESSION['user']);
 session_destroy();
 
-//header("Location:login.php");
-
+header("Location: http://localhost:3000/login");
 ?>
